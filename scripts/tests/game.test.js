@@ -2,8 +2,7 @@
  * @jest-environment jsdom
  */
 
-const { describe } = require("yargs");
-const { game } = require("../game");
+const { game, newGame, showScore } = require("../game");
 
 
 beforeAll(() => {
@@ -31,3 +30,24 @@ describe("game object contains correct keys", () => {
     });
 });
 
+describe("newGame works correctly", () => {
+    beforeAll(() => {
+        game.score = 42;
+        game.playerMoves = ["2", "1"];
+        game.currentGame = ["3", "3"];
+        document.getElementById("score").innerHTML = "42";
+        newGame();
+    });
+    test("should set game score to zero", () => {
+        expect(game.score).toEqual(0);
+    });
+    test("should clear the playerMoves", () => {
+        expect(game.playerMoves.length).toBe(0);
+    });
+    test("currentGame should be cleared", () => {
+        expect(game.currentGame.length).toBe(0);
+    });
+    test("should display 0 for the element with id of score", () => {
+        expect(document.getElementById("score").innerText).toEqual(0);
+    });
+});
